@@ -1,0 +1,566 @@
+/* ========== GENEL AYARLAR ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #000;
+  color: #f5c542;
+  line-height: 1.6;
+}
+
+/* ========== HEADER ========== */
+header {
+  background-color: #111;
+  padding: 15px 0;
+  border-bottom: 1px solid #f5c54240;
+}
+
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Logo kutusu */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f5c542;
+  letter-spacing: 1px;
+}
+
+/* Menü */
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #f5c542;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+nav ul li a:hover {
+  color: white;
+  text-shadow: 0 0 5px #f5c542;
+}
+
+/* ========== HERO (ANA SAYFA GÖRSELİ) ========== */
+.hero {
+  background: url("images/jazz-bg.jpg") center/cover no-repeat;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.hero-text {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border: 1px solid #f5c54260;
+  border-radius: 10px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #f5c542;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* ========== GENEL SECTIONS ========== */
+.section {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.section h1, .section h2 {
+  color: #f5c542;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  border-bottom: 1px solid #f5c54260;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.section p {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  color: #ddd;
+}
+
+/* ========== ETKİNLİK KARTLARI ========== */
+.event-container {
+  display: flex;
+  justify-content: center;     
+  align-items: flex-start;
+  flex-wrap: wrap;              
+  gap: 30px;                   
+  padding: 50px 80px;
+}
+
+.event-card {
+  display: block;
+  text-decoration: none;
+  background-color: #111;
+  color: #f5c518;
+  border: 1px solid #f5c51833;
+  border-radius: 12px;
+  width: 300px;                 
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.3);
+}
+
+.event-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.event-card h3 {
+  color: #f5c542;
+  margin: 15px 0 5px;
+}
+
+.event-card p {
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+/* ========== GALERİ / ESKİ ETKİNLİKLER ========== */
+.gallery {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+.gallery-item {
+  width: 280px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #f5c54240;
+  background-color: #000;
+  transition: 0.3s;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 15px #f5c54240;
+}
+
+.gallery-item a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.3s;
+  display: block;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+
+.caption {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  text-align: center;
+}
+
+.caption h3 {
+  color: #f5c542;
+  font-size: 1.1rem;
+}
+
+/* ========== ETKİNLİK DETAY SAYFASI ========== */
+.event-title {
+  color: #f5c542;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.event-meta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.event-desc {
+  color: #ddd;
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+}
+
+.event-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 15px;
+  margin: 20px 0 30px;
+}
+
+.event-photos img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #f5c54240;
+  transition: transform .25s ease;
+}
+
+.event-photos img:hover {
+  transform: scale(1.02);
+}
+
+.back-row {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: #f5c542;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background: #d4aa2c;
+}
+
+/* ========== İLETİŞİM FORMU ========== */
+.contact-form {
+  max-width: 500px;
+  margin: 30px auto;
+  background: #111;
+  border: 1px solid #f5c54240;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #222;
+  color: #f5c542;
+}
+
+.contact-form textarea {
+  height: 120px; /* küçültüldü */
+  resize: vertical;
+}
+
+.contact-form button {
+  background: #f5c542;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.contact-form button:hover {
+  background: #d4aa2c;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  color: #f5c518;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  border-top: 1px solid #3b3b3b;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 60px; 
+  background-color: #000;
+  color: #fff;
+}
+
+/* ========== RESPONSIVE TASARIM ========== */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .events, .gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
+}
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-btn, .delete-btn {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-btn {
+  background-color: #f5c518;
+  color: #000;
+}
+
+.delete-btn {
+  background-color: #b22222;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #ffd700;
+}
+
+.delete-btn:hover {
+  background-color: #ff4c4c;
+}
+
+.section {
+  padding: 40px 20px;
+}
+
+.events-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1.9fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.calendar-panel,
+.events-panel {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.calendar-panel h2,
+.events-panel h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+#calendar-header button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+#calendar-header button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+#month-label {
+  font-weight: 600;
+}
+
+#calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.calendar-day-name {
+  text-align: center;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.calendar-day,
+.calendar-empty {
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.calendar-day {
+  transition: background 0.15s, transform 0.1s;
+}
+
+.calendar-day:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.calendar-day.has-event {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: gold;
+}
+
+.event-card {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.event-card h3 {
+  margin: 0 0 4px 0;
+}
+
+.event-card p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+}
+
+.event-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.event-actions button {
+  border: none;
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.event-actions .edit-btn {
+  background: rgba(0, 200, 150, 0.8);
+  color: #fff;
+}
+
+.event-actions .delete-btn {
+  background: rgba(200, 40, 60, 0.9);
+  color: #fff;
+}
+
+/* Form */
+#eventForm {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#eventForm input,
+#eventForm textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+}
+
+#eventForm button[type="submit"] {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(120, 200, 255, 0.9);
+  color: #000;
+  cursor: pointer;
+}
+
+#eventForm #resetForm {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Mobilde tek kolona düşsün */
+@media (max-width: 800px) {
+  .events-layout {
+    grid-template-columns: 1fr;
+  }
+}
+

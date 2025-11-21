@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Etkinlikler — ANKÜCaz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo-box">
+      <img src="images/logo.png" class="logo" alt="ANKÜCaz Logo">
+      <span class="logo-text">ANKÜCaz</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Ana Sayfa</a></li>
+        <li><a href="etkinlikler.html">Etkinlikler</a></li>
+        <li><a href="hakkimizda.html">Hakkımızda</a></li>
+        <li><a href="eski-etkinlikler.html">Eski Etkinliklerden Kareler</a></li>
+        <li><a href="iletisim.html">İletişim</a></li>
+        <li><a href="https://www.instagram.com/anku.jazz" target="_blank">Instagram</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="section">
+  <h1>Etkinlikler</h1>
+
+  <div class="events-layout">
+    <!-- Sol: Takvim -->
+    <div class="calendar-panel">
+      <h2>Takvim</h2>
+      <div id="calendar-header">
+        <button id="prev-month">&lt;</button>
+        <span id="month-label"></span>
+        <button id="next-month">&gt;</button>
+      </div>
+      <div id="calendar-grid"></div>
+    </div>
+
+    <!-- Sağ: Liste + Form -->
+    <div class="events-panel">
+      <h2>Etkinlik Listesi</h2>
+      <div id="events-container">
+        <!-- JS ile doldurulacak -->
+      </div>
+
+      <h2>Etkinlik Ekle / Düzenle</h2>
+      <form id="eventForm">
+        <input type="hidden" id="eventId" />
+
+        <label>Etkinlik Adı:</label>
+        <input type="text" id="title" required />
+
+        <label>Tarih:</label>
+        <input type="date" id="date" required />
+
+        <label>Mekan:</label>
+        <input type="text" id="location" required />
+
+        <label>Açıklama:</label>
+        <textarea id="description" required></textarea>
+
+        <button type="submit">Kaydet</button>
+        <button type="button" id="resetForm">Yeni Etkinlik</button>
+      </form>
+
+      <p id="result" style="margin-top: 10px;"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 ANKÜCaz Topluluğu | Tüm Hakları Saklıdır</p>
+</footer>
+
+<script src="js/etkinlikler.js"></script>
+</body>
+</html>
+
+
+<footer>
+  <p>© 2025 ANKÜCaz Topluluğu | Tüm Hakları Saklıdır</p>
+</footer>
+
+</body>
+</html>
