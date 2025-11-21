@@ -557,7 +557,7 @@ body {
   cursor: pointer;
 }
 
-/* Mobilde tek kolona düşsün */
+
 @media (max-width: 800px) {
   .events-layout {
     grid-template-columns: 1fr;

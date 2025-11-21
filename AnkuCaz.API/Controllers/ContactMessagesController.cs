@@ -16,7 +16,6 @@ namespace AnkuCaz.API.Controllers
             _context = context;
         }
 
-        // POST: api/contactmessages
         [HttpPost]
         public async Task<IActionResult> Submit(ContactMessage msg)
         {
@@ -25,7 +24,6 @@ namespace AnkuCaz.API.Controllers
             return Ok(msg);
         }
 
-        // GET: api/contactmessages
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

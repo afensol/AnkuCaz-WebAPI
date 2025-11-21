@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5005"; // Swagger'daki adresin
+const API_BASE = "http://localhost:5005"; 
 
 let events = [];
 let currentMonth = new Date().getMonth();
@@ -25,7 +25,7 @@ async function loadEvents() {
   }
 }
 
-// ------------- Etkinlik LİSTESİ -------------
+
 function renderEventsList(filterDate = null) {
   const container = document.getElementById("events-container");
   container.innerHTML = "";
@@ -59,7 +59,7 @@ function renderEventsList(filterDate = null) {
     container.appendChild(card);
   });
 
-  // event listener'lar
+
   document.querySelectorAll(".edit-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const id = parseInt(btn.getAttribute("data-id"));
@@ -78,7 +78,7 @@ function renderEventsList(filterDate = null) {
   });
 }
 
-// ------------- FORM (Ekle / Güncelle) -------------
+
 function setupForm() {
   const form = document.getElementById("eventForm");
   const resetBtn = document.getElementById("resetForm");
@@ -100,7 +100,7 @@ function setupForm() {
     try {
       let response;
       if (id) {
-        // Güncelleme (PUT)
+        
         response = await fetch(`${API_BASE}/api/Events/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -110,7 +110,7 @@ function setupForm() {
         result.style.color = "green";
         result.textContent = "Etkinlik güncellendi.";
       } else {
-        // Yeni ekleme (POST)
+        
         response = await fetch(`${API_BASE}/api/Events`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -146,7 +146,7 @@ function fillForm(ev) {
   document.getElementById("description").value = ev.description;
 }
 
-// ------------- SİLME -------------
+
 async function deleteEvent(id) {
   try {
     const response = await fetch(`${API_BASE}/api/Events/${id}`, {
@@ -160,7 +160,7 @@ async function deleteEvent(id) {
   }
 }
 
-// ------------- TAKVİM -------------
+
 function setupCalendarNav() {
   document.getElementById("prev-month").addEventListener("click", () => {
     if (currentMonth === 0) {
@@ -195,7 +195,7 @@ function renderCalendar() {
 
   monthLabel.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-  // Haftanın günleri başlık
+  
   const daysOfWeek = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
   daysOfWeek.forEach(d => {
     const cell = document.createElement("div");
@@ -205,17 +205,16 @@ function renderCalendar() {
   });
 
   const firstDay = new Date(currentYear, currentMonth, 1);
-  const startingDay = (firstDay.getDay() + 6) % 7; // Pzt'i 0 yapmak için
+  const startingDay = (firstDay.getDay() + 6) % 7; 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-  // Boş hücreler
   for (let i = 0; i < startingDay; i++) {
     const emptyCell = document.createElement("div");
     emptyCell.className = "calendar-empty";
     grid.appendChild(emptyCell);
   }
 
-  // Günler
+  
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = toDateString(currentYear, currentMonth + 1, day);
 
@@ -223,7 +222,7 @@ function renderCalendar() {
     cell.className = "calendar-day";
     cell.textContent = day;
 
-    // Bu güne ait etkinlik var mı?
+    
     const hasEvent = events.some(ev => ev.date === dateStr);
     if (hasEvent) {
       cell.classList.add("has-event");
@@ -242,5 +241,5 @@ function renderCalendar() {
 function toDateString(year, month, day) {
   const m = month.toString().padStart(2, "0");
   const d = day.toString().padStart(2, "0");
-  return `${year}-${m}-${d}`; // input[type=date] formatıyla uyumlu
+  return `${year}-${m}-${d}`; 
 }

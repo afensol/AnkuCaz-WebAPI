@@ -16,7 +16,7 @@ namespace AnkuCaz.API.Controllers
             _context = context;
         }
 
-        // GET: api/events
+        
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -24,7 +24,7 @@ namespace AnkuCaz.API.Controllers
             return Ok(eventsList);
         }
 
-        // GET: api/events/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -33,7 +33,7 @@ namespace AnkuCaz.API.Controllers
             return Ok(ev);
         }
 
-        // POST: api/events
+        
         [HttpPost]
         public async Task<IActionResult> Create(Event ev)
         {
@@ -42,7 +42,7 @@ namespace AnkuCaz.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = ev.Id }, ev);
         }
 
-        // PUT: api/events/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Event ev)
         {
@@ -54,7 +54,7 @@ namespace AnkuCaz.API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/events/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

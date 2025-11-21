@@ -1,0 +1,48 @@
+Etkinlik Takvimi Projesi – Mevcut Durum Özeti
+===========================================
+
+1. Proje Genel Tanımı
+- Amaç: ANKÜCaz kulübü için etkinliklerin takvim üzerinde yönetilebildiği bir web uygulaması geliştirmek.
+- Yapı:
+  - Backend: ASP.NET Core Web API (AnkuCazAPI)
+  - Frontend: HTML, CSS, JavaScript (etkinlikler.html + style.css + js klasörü)
+  - Veritabanı: (şu anda JSON dosyası / in-memory / ileride EF Core ile SQL düşünülebilir)
+
+2. Backend (API) Durumu
+- EventsController üzerinden aşağıdaki işlemler destekleniyor:
+  - GET /api/events       → Tüm etkinlikleri listeler
+  - POST /api/events      → Yeni etkinlik ekler
+  - DELETE /api/events/{id} → ID’ye göre etkinlik siler
+- API, frontend’den gelen istekleri JSON formatında alıp cevaplıyor.
+- Şu an için temel CRUD işlemlerinin bir kısmı tamamlanmış durumda (listeleme, ekleme, silme).
+
+3. Frontend (Takvim Arayüzü) Durumu
+- etkinlikler.html dosyasında:
+  - Ay görünümünde bir takvim yer alıyor.
+  - JavaScript ile:
+    - Sayfa yüklendiğinde API’den etkinlikler çekiliyor.
+    - Etkinlik olan günler takvimde farklı renkle gösteriliyor (örneğin "has-event" sınıfı).
+    - Bir güne tıklanınca o güne ait etkinlikler listeleniyor.
+    - Form üzerinden yeni etkinlik eklenebiliyor; bu işlem doğrudan API’ye POST ile gönderiliyor.
+- Tasarım çalışır durumda, ileride görsel iyileştirmeler (CSS tasarım, responsive yapı vb.) planlanabilir.
+
+4. Backend–Frontend Entegrasyonu
+- Frontend, `fetch()` ile API’ye istek atıyor:
+  - GET istekleriyle etkinlikler yükleniyor.
+  - POST istekleriyle yeni etkinlik ekleniyor.
+  - DELETE istekleriyle etkinlik silme planlanıyor veya kısmen tamamlandı.
+- API URL’si sabit bir base address olarak JavaScript içinde tanımlı (örneğin: http://localhost:5072/api/events gibi).
+
+5. Şu Ana Kadar Tamamlananlar
+- Çalışır durumda:
+  - Temel takvim görünümü
+  - API’den etkinlik listeleme
+  - Yeni etkinlik ekleme
+  - Gün bazlı etkinlik görüntüleme
+- GitHub bağlantısı yeni bir repo ile yeniden kurulmuş, eski repo ile bağlantı kesilmiştir.
+
+6. Planlanan Geliştirmeler
+- Etkinlik güncelleme (PUT /api/events/{id}) endpoint’inin tamamlanması ve frontend’e entegre edilmesi.
+- Daha şık bir arayüz için CSS iyileştirmeleri.
+- Kalıcı veritabanı için Entity Framework Core + SQL desteğinin eklenmesi.
+- Kullanıcıya geri bildirim mesajları (başarılı ekleme, silme, hata durumları vb.) gösterilmesi.
