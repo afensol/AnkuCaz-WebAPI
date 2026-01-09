@@ -9,25 +9,25 @@
 <body>
 
   <header>
-  <div class="container">
-    <div class="logo-box">
-      <img src="images/logo.png" alt="ANKÜCaz Logo" class="logo" />
-      <span class="logo-text">ANKÜCaz</span>
+    <div class="container">
+      <div class="logo-box">
+        <img src="images/logo.png" alt="ANKÜCaz Logo" class="logo" />
+        <span class="logo-text">ANKÜCaz</span>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Ana Sayfa</a></li>
+          <li><a href="etkinlikler.html">Etkinlikler</a></li>
+          <li><a href="hakkimizda.html">Hakkımızda</a></li>
+          <li><a href="eski-etkinlikler.html">Eski Etkinliklerden Kareler</a></li>
+          <li><a href="iletisim.html">İletişim</a></li>
+          <li><a href="https://www.instagram.com/anku.jazz" target="_blank">Instagram</a></li>
+        </ul>
+      </nav>
     </div>
-    <nav>
-  <ul>
-    <li><a href="index.html">Ana Sayfa</a></li>
-    <li><a href="etkinlikler.html">Etkinlikler</a></li>
-    <li><a href="hakkimizda.html">Hakkımızda</a></li>
-    <li><a href="eski-etkinlikler.html">Eski Etkinliklerden Kareler</a></li>
-    <li><a href="iletisim.html">İletişim</a></li>
-    <li><a href="https://www.instagram.com/anku.jazz" target="_blank">Instagram</a></li>
-  </ul>
-</nav>
-  </div>
-</header>
+  </header>
 
-
+  <!-- HERO ÖNCE -->
   <section class="hero">
     <div class="hero-text">
       <h1>ANKÜCaz Topluluğu</h1>
@@ -35,8 +35,37 @@
     </div>
   </section>
 
+  <!-- DUYURU + YAKLAŞAN ETKİNLİKLER (HERO ALTINDA) -->
+  <section class="home-panels container">
+    <!-- Duyurular -->
+    <div class="panel-card" id="announcementsPanel">
+      <div class="panel-head">
+        <h2>Duyurular</h2>
+        <a class="panel-link" href="announcements.html">Tüm duyurular →</a>
+      </div>
+
+      <div class="panel-list" id="announcementsList">
+        <div class="panel-empty">Yükleniyor...</div>
+      </div>
+    </div>
+
+    <!-- Yaklaşan Etkinlikler -->
+    <div class="panel-card" id="upcomingEventsPanel">
+      <div class="panel-head">
+        <h2>Yaklaşan Etkinlikler</h2>
+        <a class="panel-link" href="etkinlikler.html">Tüm etkinlikler →</a>
+      </div>
+
+      <div class="panel-list" id="upcomingEventsList">
+        <div class="panel-empty">Yükleniyor...</div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <p>© 2025 ANKÜCaz Topluluğu | Tüm Hakları Saklıdır</p>
   </footer>
+
+  <script src="./js/home.js"></script>
 </body>
 </html>

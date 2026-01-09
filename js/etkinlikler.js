@@ -1,168 +1,73 @@
-const API_BASE = "http://localhost:5005"; 
+const API_BASE = "http://localhost:5005";
 
 let events = [];
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadEvents();
-  setupForm();
   setupCalendarNav();
+  loadEvents();
 });
 
 async function loadEvents() {
+  const container = document.getElementById("events-container");
   try {
     const response = await fetch(`${API_BASE}/api/Events`);
     if (!response.ok) throw new Error("Etkinlikler alınamadı");
 
     events = await response.json();
-    renderEventsList();
-    renderCalendar();
+
+    renderEventsList();   // tüm etkinlikler
+    renderCalendar();     // takvimde işaretle
   } catch (err) {
     console.error(err);
-    const container = document.getElementById("events-container");
-    container.innerHTML = "<p>Etkinlikler yüklenirken hata oluştu.</p>";
+    if (container) container.innerHTML = "<p>Etkinlikler yüklenirken hata oluştu.</p>";
   }
 }
 
+// ISO (2025-12-31T10:45:00) -> YYYY-MM-DD
+function fmtDate(iso) {
+  if (!iso) return "";
+  // API zaten "2025-12-31T10:45:00" gibi dönüyor; dilimi korumak için slice en güvenlisi:
+  return String(iso).slice(0, 10);
+}
 
 function renderEventsList(filterDate = null) {
   const container = document.getElementById("events-container");
+  if (!container) return;
+
   container.innerHTML = "";
 
   let filtered = events;
-
   if (filterDate) {
-    filtered = events.filter(ev => ev.date === filterDate);
+    filtered = events.filter(ev => fmtDate(ev.startDate) === filterDate);
   }
 
-  if (!filtered || filtered.length === 0) {
+  if (!filtered.length) {
     container.innerHTML = "<p>Bu tarihte etkinlik bulunmuyor.</p>";
     return;
   }
 
   filtered.forEach(ev => {
+    const start = fmtDate(ev.startDate);
+    const end = fmtDate(ev.endDate);
+
     const card = document.createElement("div");
     card.className = "event-card";
 
     card.innerHTML = `
-      <h3>${ev.title}</h3>
-      <p><strong>Tarih:</strong> ${ev.date}</p>
-      <p><strong>Mekan:</strong> ${ev.location}</p>
-      <p>${ev.description}</p>
-      <div class="event-actions">
-        <button data-id="${ev.id}" class="edit-btn">Düzenle</button>
-        <button data-id="${ev.id}" class="delete-btn">Sil</button>
-      </div>
+      <h3>${ev.title ?? ""}</h3>
+      <p><strong>Tarih:</strong> ${start}${end && end !== start ? ` → ${end}` : ""}</p>
+      <p><strong>Mekan:</strong> ${ev.venueName ?? "—"}</p>
+      <a class="detail-link" href="event.html?id=${ev.id}">Detay / Kayıt</a>
     `;
 
     container.appendChild(card);
   });
-
-
-  document.querySelectorAll(".edit-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = parseInt(btn.getAttribute("data-id"));
-      const ev = events.find(e => e.id === id);
-      if (ev) fillForm(ev);
-    });
-  });
-
-  document.querySelectorAll(".delete-btn").forEach(btn => {
-    btn.addEventListener("click", async () => {
-      const id = parseInt(btn.getAttribute("data-id"));
-      if (confirm("Bu etkinliği silmek istediğine emin misin?")) {
-        await deleteEvent(id);
-      }
-    });
-  });
 }
-
-
-function setupForm() {
-  const form = document.getElementById("eventForm");
-  const resetBtn = document.getElementById("resetForm");
-  const result = document.getElementById("result");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const id = document.getElementById("eventId").value;
-    const data = {
-      id: id ? parseInt(id) : 0,
-      title: document.getElementById("title").value,
-      date: document.getElementById("date").value,
-      location: document.getElementById("location").value,
-      description: document.getElementById("description").value,
-      imageUrl: ""
-    };
-
-    try {
-      let response;
-      if (id) {
-        
-        response = await fetch(`${API_BASE}/api/Events/${id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error("Güncelleme başarısız");
-        result.style.color = "green";
-        result.textContent = "Etkinlik güncellendi.";
-      } else {
-        
-        response = await fetch(`${API_BASE}/api/Events`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-        if (!response.ok) throw new Error("Ekleme başarısız");
-        result.style.color = "green";
-        result.textContent = "Etkinlik eklendi.";
-      }
-
-      form.reset();
-      document.getElementById("eventId").value = "";
-      await loadEvents();
-    } catch (err) {
-      console.error(err);
-      result.style.color = "red";
-      result.textContent = "Bir hata oluştu.";
-    }
-  });
-
-  resetBtn.addEventListener("click", () => {
-    form.reset();
-    document.getElementById("eventId").value = "";
-    result.textContent = "";
-  });
-}
-
-function fillForm(ev) {
-  document.getElementById("eventId").value = ev.id;
-  document.getElementById("title").value = ev.title;
-  document.getElementById("date").value = ev.date;
-  document.getElementById("location").value = ev.location;
-  document.getElementById("description").value = ev.description;
-}
-
-
-async function deleteEvent(id) {
-  try {
-    const response = await fetch(`${API_BASE}/api/Events/${id}`, {
-      method: "DELETE"
-    });
-    if (!response.ok) throw new Error("Silme başarısız");
-    await loadEvents();
-  } catch (err) {
-    console.error(err);
-    alert("Silme sırasında hata oluştu.");
-  }
-}
-
 
 function setupCalendarNav() {
-  document.getElementById("prev-month").addEventListener("click", () => {
+  document.getElementById("prev-month")?.addEventListener("click", () => {
     if (currentMonth === 0) {
       currentMonth = 11;
       currentYear--;
@@ -172,7 +77,7 @@ function setupCalendarNav() {
     renderCalendar();
   });
 
-  document.getElementById("next-month").addEventListener("click", () => {
+  document.getElementById("next-month")?.addEventListener("click", () => {
     if (currentMonth === 11) {
       currentMonth = 0;
       currentYear++;
@@ -186,6 +91,8 @@ function setupCalendarNav() {
 function renderCalendar() {
   const monthLabel = document.getElementById("month-label");
   const grid = document.getElementById("calendar-grid");
+  if (!monthLabel || !grid) return;
+
   grid.innerHTML = "";
 
   const monthNames = [
@@ -195,7 +102,7 @@ function renderCalendar() {
 
   monthLabel.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-  
+  // Gün isimleri
   const daysOfWeek = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
   daysOfWeek.forEach(d => {
     const cell = document.createElement("div");
@@ -205,16 +112,17 @@ function renderCalendar() {
   });
 
   const firstDay = new Date(currentYear, currentMonth, 1);
-  const startingDay = (firstDay.getDay() + 6) % 7; 
+  const startingDay = (firstDay.getDay() + 6) % 7; // Pazartesi=0
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
+  // Boşluklar
   for (let i = 0; i < startingDay; i++) {
     const emptyCell = document.createElement("div");
     emptyCell.className = "calendar-empty";
     grid.appendChild(emptyCell);
   }
 
-  
+  // Gün hücreleri
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = toDateString(currentYear, currentMonth + 1, day);
 
@@ -222,16 +130,12 @@ function renderCalendar() {
     cell.className = "calendar-day";
     cell.textContent = day;
 
-    
-    const hasEvent = events.some(ev => ev.date === dateStr);
-    if (hasEvent) {
-      cell.classList.add("has-event");
-    }
+    // Etkinlik var mı?
+    const hasEvent = events.some(ev => fmtDate(ev.startDate) === dateStr);
+    if (hasEvent) cell.classList.add("has-event");
 
     cell.addEventListener("click", () => {
       renderEventsList(dateStr);
-      const dateInput = document.getElementById("date");
-      if (dateInput) dateInput.value = dateStr;
     });
 
     grid.appendChild(cell);
@@ -239,7 +143,7 @@ function renderCalendar() {
 }
 
 function toDateString(year, month, day) {
-  const m = month.toString().padStart(2, "0");
-  const d = day.toString().padStart(2, "0");
-  return `${year}-${m}-${d}`; 
+  const m = String(month).padStart(2, "0");
+  const d = String(day).padStart(2, "0");
+  return `${year}-${m}-${d}`;
 }

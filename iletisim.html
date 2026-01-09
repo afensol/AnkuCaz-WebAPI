@@ -42,18 +42,25 @@
 
   <div class="contact-form">
     <h3>Mesaj Gönder</h3>
-    <form action="#" method="post">
-      <input type="text" name="isim" placeholder="Adınız" required>
-      <input type="email" name="email" placeholder="E-posta Adresiniz" required>
-      <textarea name="mesaj" rows="5" placeholder="Mesajınız"></textarea>
+
+    <!-- ÖNEMLİ: id veriyoruz, action'ı kaldırıyoruz -->
+    <form id="contactForm">
+      <input type="text" id="name" name="isim" placeholder="Adınız" required>
+      <input type="email" id="email" name="email" placeholder="E-posta Adresiniz" required>
+      <textarea id="message" name="mesaj" rows="5" placeholder="Mesajınız" required></textarea>
       <button type="submit">Gönder</button>
     </form>
+
+    <p id="contactResult" class="contact-result"></p>
   </div>
 </section>
 
 <footer>
   <p>© 2025 ANKÜCaz Topluluğu | Tüm Hakları Saklıdır</p>
 </footer>
+
+<!-- JS dosyasını en sona ekliyoruz -->
+<script src="js/iletisim.js"></script>
 
 </body>
 </html>

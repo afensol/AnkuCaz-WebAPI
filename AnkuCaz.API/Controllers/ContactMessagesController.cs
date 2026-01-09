@@ -16,21 +16,36 @@ namespace AnkuCaz.API.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Submit(ContactMessage msg)
+        // GET: api/ContactMessages
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ContactMessage>>> GetAll()
         {
-            _context.ContactMessages.Add(msg);
-            await _context.SaveChangesAsync();
-            return Ok(msg);
+            var messages = await _context.ContactMessages.ToListAsync();
+            return Ok(messages);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        // POST: api/ContactMessages
+        [HttpPost]
+        public async Task<ActionResult<ContactMessage>> Create(ContactMessage message)
         {
-            var messages = await _context.ContactMessages
-                                         .OrderByDescending(m => m.CreatedAt)
-                                         .ToListAsync();
-            return Ok(messages);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _context.ContactMessages.Add(message);
+            await _context.SaveChangesAsync();   
+
+            return CreatedAtAction(nameof(GetById), new { id = message.Id }, message);
+        }
+
+        // GET: api/ContactMessages/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ContactMessage>> GetById(int id)
+        {
+            var message = await _context.ContactMessages.FindAsync(id);
+            if (message == null)
+                return NotFound();
+
+            return Ok(message);
         }
     }
 }
