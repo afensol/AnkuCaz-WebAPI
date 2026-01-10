@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Etkinlik Detayı — ANKÜCaz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Proje CSS -->
+  <link rel="stylesheet" href="./style.css" />
+
+  <style>
+    .detail-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 16px 90px;
+    }
+
+    .detail-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .detail-title {
+      font-size: 2.2rem;
+      color: #f5c542;
+      margin: 0;
+    }
+
+    .detail-sub {
+      color: rgba(255,255,255,0.75);
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(245,197,66,0.14);
+      border: 1px solid rgba(245,197,66,0.35);
+      color: #f5c542;
+      text-decoration: none;
+      font-weight: 700;
+      transition: .2s;
+    }
+    .back-link:hover {
+      background: rgba(245,197,66,0.20);
+      transform: translateY(-1px);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 920px){
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(245,197,66,0.30);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.55);
+      backdrop-filter: blur(8px);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 14px;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.95rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .map {
+      width: 100%;
+      height: 340px;
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+      margin-bottom: 14px;
+    }
+
+    /* ✅ Description (Etkinlik Hakkında) kutusu */
+    .desc-box h3{
+      margin: 6px 0 10px;
+      color: #f5c542;
+      letter-spacing: .3px;
+      font-size: 1.1rem;
+    }
+
+    .desc-box p{
+      margin: 0;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.65;
+      font-size: 0.95rem;
+      white-space: pre-line; /* satır sonlarını korur */
+    }
+
+    .form h2 {
+      margin: 0 0 10px;
+      color: #f5c542;
+    }
+
+    .input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      outline: none;
+      margin-top: 10px;
+    }
+    .input:focus {
+      border-color: rgba(245,197,66,0.55);
+      box-shadow: 0 0 0 4px rgba(245,197,66,0.14);
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: none;
+      border-radius: 12px;
+      background: #f5c542;
+      color: #000;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .18s;
+    }
+    .btn:hover { filter: brightness(0.95); transform: translateY(-1px); }
+
+    #msg { margin-top: 10px; }
+    .success { color: #22c55e; font-weight: 700; }
+    .error { color: #ef4444; font-weight: 700; }
+
+    .spacer { height: 8px; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo-box">
+      <img class="logo" src="./images/logo.png" alt="ANKÜCaz Logo">
+      <div class="logo-text">ANKÜCaz</div>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="./index.html">Ana Sayfa</a></li>
+        <li><a href="./etkinlikler.html">Etkinlikler</a></li>
+        <li><a href="./hakkimizda.html">Hakkımızda</a></li>
+        <li><a href="./gallery.html">Eski Etkinliklerden Kareler</a></li>
+        <li><a href="./iletisim.html">İletişim</a></li>
+        <li><a href="https://instagram.com/" target="_blank" rel="noreferrer">Instagram</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="detail-wrap">
+
+  <div class="detail-head">
+    <div>
+      <h1 id="title" class="detail-title">Yükleniyor...</h1>
+      <div id="subtitle" class="detail-sub">Detaylar ve konum bilgisi yükleniyor.</div>
+    </div>
+
+    <a class="back-link" href="./etkinlikler.html">← Etkinliklere Dön</a>
+  </div>
+
+  <div class="detail-grid">
+
+  <!-- SOL: sadece HARİTA -->
+  <section class="panel">
+    <iframe id="map" class="map" loading="lazy"></iframe>
+
+    <div class="spacer"></div>
+    <div style="color: rgba(255,255,255,0.70); font-size: 13px; margin-bottom: 10px;">
+      Konum bilgisi, etkinlikte girilen “Mekan Adı + Adres” ile otomatik oluşturulur.
+    </div>
+  </section>
+
+  <!-- SAĞ: ÜSTTE açıklama + altta katılım -->
+  <aside class="right-stack">
+
+    <!-- ✅ Açıklama + meta bilgileri üstte -->
+    <section class="panel">
+      
+      <div class="meta-row">
+        <div class="desc-box">
+          <h3>🎶 Etkinlik Hakkında</h3>
+          <p id="description">Yükleniyor...</p>
+        </div>
+        <div class="pill">📍 <strong>Mekan:</strong> <span id="location"></span></div>
+        <div class="pill">🕒 <strong>Başlangıç:</strong> <span id="start"></span></div>
+        <div class="pill">⏰ <strong>Bitiş:</strong> <span id="end"></span></div>
+      </div>
+
+      
+    </section>
+
+    <!-- ✅ Katılım altta -->
+    <section class="panel form">
+      <h2>🎟 Etkinliğe Katıl</h2>
+      <div style="color: rgba(255,255,255,0.70); font-size: 13px;">
+        Ad soyad ve e-postanı gir, kaydın alınsın.
+      </div>
+
+      <input id="fullName" class="input" placeholder="Ad Soyad" />
+      <input id="email" class="input" placeholder="E-posta" type="email" />
+
+      <button class="btn" onclick="register()">Kayıt Ol</button>
+      <div id="msg"></div>
+    </section>
+
+  </aside>
+
+</div>
+
+</main>
+
+<footer>
+  © 2025 ANKÜCaz Topluluğu | Tüm Hakları Saklıdır
+</footer>
+
+<script src="./js/etkinlik_detay.js"></script>
+</body>
+</html>

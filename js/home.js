@@ -86,7 +86,7 @@ async function loadHomeUpcomingEvents() {
   }
 
   try {
-    const url = `${API_BASE}/api/admin/events`;
+    const url = `${API_BASE}/api/Events`;
     console.log("➡️ EVENT fetch:", url);
 
     const res = await fetch(url);
@@ -94,32 +94,15 @@ async function loadHomeUpcomingEvents() {
 
     if (!res.ok) throw new Error("Etkinlikler alınamadı");
 
-    const dataRaw = await res.json();
-    console.log("✅ EVENT raw:", dataRaw);
-
-    const mapped = dataRaw.map(e => {
-      const id = e.id ?? e.eventId ?? e.EventId;
-
-      const name =
-        e.name ?? e.title ?? e.eventName ?? e.EventName ?? "Etkinlik";
-
-      const dateStr =
-        e.eventDate ?? e.date ?? e.startDate ?? e.eventTime ?? e.EventDate ?? e.StartDate;
-
-      const image =
-        e.imageUrl ?? e.image ?? e.photoUrl ?? e.coverImageUrl ?? e.ImageUrl ?? "";
-
-      return { id, name, eventDate: dateStr, imageUrl: image };
-    });
-
-    console.log("✅ EVENT mapped:", mapped);
+    const data = await res.json();
+    console.log("✅ EVENT data:", data);
 
     const now = new Date();
 
-    const upcoming = mapped
-      .filter(e => e.eventDate && !isNaN(new Date(e.eventDate)))
-      .filter(e => new Date(e.eventDate) >= now)
-      .sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate))
+    const upcoming = data
+      .filter(e => e.startDate && !isNaN(new Date(e.startDate)))
+      .filter(e => new Date(e.startDate) >= now)
+      .sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
       .slice(0, EVENT_LIMIT);
 
     if (upcoming.length === 0) {
@@ -129,10 +112,10 @@ async function loadHomeUpcomingEvents() {
 
     listEl.innerHTML = upcoming.map(e => `
       <div class="ev-item" onclick="goEvent(${e.id})">
-        <img class="ev-thumb" src="${e.imageUrl || "images/placeholder.jpg"}" alt="Etkinlik">
         <div>
-          <div class="ev-title">${escapeHtml(e.name)}</div>
-          <div class="ev-meta">${formatDateTR(e.eventDate)}</div>
+          <div class="ev-title">${escapeHtml(e.title)}</div>
+          <div class="ev-meta">${formatDateTR(e.startDate)}</div>
+          <div class="ev-meta">${escapeHtml((e.locationName || "") + " • " + (e.locationAddress || ""))}</div>
         </div>
       </div>
     `).join("");
@@ -143,9 +126,9 @@ async function loadHomeUpcomingEvents() {
   }
 }
 
+
 function goEvent(id) {
-  // Sende detay sayfan event.html görünüyor
-  window.location.href = `event.html?id=${id}`;
+  window.location.href = `etkinlik_kayıt.html?id=${id}`;
 }
 
 function escapeHtml(str) {

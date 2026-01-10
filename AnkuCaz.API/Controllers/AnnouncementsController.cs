@@ -2,7 +2,6 @@ using AnkuCaz.API.Data;
 using AnkuCaz.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AnkuCaz.API.Security;
 
 namespace AnkuCaz.API.Controllers
 {
@@ -39,8 +38,7 @@ namespace AnkuCaz.API.Controllers
         }
 
         // POST: /api/announcements
-        [AdminKey]
-        [RequireStaffRole("admin", "organizer")]
+        
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Announcement dto)
         {
@@ -63,8 +61,7 @@ namespace AnkuCaz.API.Controllers
         }
 
         // PUT: /api/announcements/{id}
-        [AdminKey]  
-        [RequireStaffRole("admin", "organizer")]
+       
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] Announcement dto)
         {
@@ -81,8 +78,6 @@ namespace AnkuCaz.API.Controllers
         }
 
         // DELETE: /api/announcements/{id}
-        [AdminKey]
-        [RequireStaffRole("admin", "organizer")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

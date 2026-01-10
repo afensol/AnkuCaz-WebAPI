@@ -35,7 +35,7 @@ function fmtDate(iso) {
 function renderEventsList(filterDate = null) {
   const container = document.getElementById("events-container");
   if (!container) return;
-
+  
   container.innerHTML = "";
 
   let filtered = events;
@@ -49,21 +49,25 @@ function renderEventsList(filterDate = null) {
   }
 
   filtered.forEach(ev => {
-    const start = fmtDate(ev.startDate);
-    const end = fmtDate(ev.endDate);
+  const start = fmtDate(ev.startDate);
+  const end = fmtDate(ev.endDate);
 
-    const card = document.createElement("div");
-    card.className = "event-card";
+  // ✅ MEKAN: yeni alanlar
+  const mekan = [ev.locationName, ev.locationAddress].filter(Boolean).join(" — ");
 
-    card.innerHTML = `
-      <h3>${ev.title ?? ""}</h3>
-      <p><strong>Tarih:</strong> ${start}${end && end !== start ? ` → ${end}` : ""}</p>
-      <p><strong>Mekan:</strong> ${ev.venueName ?? "—"}</p>
-      <a class="detail-link" href="event.html?id=${ev.id}">Detay / Kayıt</a>
-    `;
+  const card = document.createElement("div");
+  card.className = "event-card";
 
-    container.appendChild(card);
-  });
+  card.innerHTML = `
+    <h3>${ev.title ?? ""}</h3>
+    <p><strong>Tarih:</strong> ${start}${end && end !== start ? ` → ${end}` : ""}</p>
+    <p><strong>Mekan:</strong> ${mekan || "—"}</p>
+    <a class="detail-link" href="etkinlik_kayıt.html?id=${ev.id}">Detay / Kayıt</a>
+  `;
+
+  container.appendChild(card);
+});
+
 }
 
 function setupCalendarNav() {

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnkuCaz.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c5c9948f970b0b598fb4adbfa36670253d33ea2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd9c87c0df09b3edf60662f6bafb564dab9de644")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnkuCaz.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnkuCaz.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

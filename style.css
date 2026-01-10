@@ -6,11 +6,27 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* ========= JAZZ SPOTLIGHT BACKGROUND (Sayfa genel) ========= */
 body {
-  background-color: #000;
-  color: #f5c542;
-  line-height: 1.6;
+  background:
+    radial-gradient(900px 500px at 18% 18%, rgba(245,197,66,.18), transparent 60%),
+    radial-gradient(800px 450px at 75% 12%, rgba(168,85,247,.14), transparent 55%),
+    radial-gradient(700px 450px at 65% 82%, rgba(34,211,238,.10), transparent 55%),
+    linear-gradient(180deg, #050505 0%, #070a12 55%, #040404 100%);
 }
+
+/* Hafif film grain / doku */
+body::before{
+  content:"";
+  position: fixed;
+  inset:0;
+  pointer-events:none;
+  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity:.05;
+  mix-blend-mode: overlay;
+}
+
 .container {
   width: 90%;
   margin: 0 auto;
@@ -69,6 +85,22 @@ nav ul li a:hover {
   color: white;
   text-shadow: 0 0 5px #f5c542;
 }
+/* ========= Başlıkları daha canlı ========= */
+.section h1, .section h2{
+  text-shadow:
+    0 0 10px rgba(245,197,66,.25),
+    0 0 22px rgba(245,197,66,.18);
+}
+
+.section h1::after, .section h2::after{
+  content:"";
+  display:block;
+  height:2px;
+  margin:10px auto 0;
+  width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(245,197,66,.9), transparent);
+  border-radius: 999px;
+}
 
 /* ========== HERO (ANA SAYFA GÖRSELİ) ========== */
 .hero {
@@ -121,48 +153,100 @@ nav ul li a:hover {
 }
 
 /* ========== ETKİNLİK KARTLARI ========== */
+/* =========================================================
+   GELİŞMİŞ ETKİNLİK KARTLARI (JAZZ POSTER ESTETİĞİ)
+   ========================================================= */
+
 .event-container {
   display: flex;
   justify-content: center;     
-  align-items: flex-start;
+  align-items: stretch; /* Kartların boylarını eşitler */
   flex-wrap: wrap;              
-  gap: 30px;                   
-  padding: 50px 80px;
+  gap: 40px; /* Boşluğu biraz artırdık, nefes alsın */
+  padding: 50px 20px; /* Mobilde taşmaması için yanları daralttık */
 }
 
 .event-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
-  background-color: #111;
+  background: linear-gradient(145deg, #161618, #0a0a0b);
   color: #f5c518;
-  border: 1px solid #f5c51833;
-  border-radius: 12px;
-  width: 300px;                 
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.3);
+  border: 1px solid rgba(245, 197, 24, 0.1);
+  border-radius: 20px; /* Takvimle uyumlu köşe yumuşaklığı */
+  width: 320px;                 
+  padding: 15px; /* İç boşluğu biraz daha dengeli yaptık */
+  text-align: left; /* Jaz estetiği için sola yaslı daha asil durur */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+.event-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at top right, rgba(245, 197, 66, 0.05), transparent);
+  pointer-events: none;
+}
+
+.event-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  border-color: rgba(245, 197, 24, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(245, 197, 66, 0.1);
+}
+
+/* Görsel Alanı */
 .event-card img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.event-card h3 {
-  color: #f5c542;
-  margin: 15px 0 5px;
-}
-
-.event-card p {
-  color: #ccc;
+  border-radius: 15px;
   margin-bottom: 15px;
+  filter: grayscale(20%) contrast(110%); /* Hafif nostaljik dokunuş */
+  transition: all 0.5s ease;
+}
+
+.event-card:hover img {
+  filter: grayscale(0%) contrast(100%);
+  transform: scale(1.05);
+}
+
+/* Başlık */
+.event-card h3 {
+  font-family: 'Playfair Display', serif; /* Jaz ruhu için */
+  color: #f5c542;
+  font-size: 1.4rem;
+  margin: 10px 0 8px;
+  line-height: 1.2;
+}
+
+/* Metin Alanı */
+.event-card p {
+  color: #b0b0b0;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  flex-grow: 1; /* Açıklama kısa olsa bile kart boyunu korur */
+}
+
+/* Kartın altına şık bir "Detay" veya "Tarih" çizgisi */
+.event-card::after {
+  content: "RİTMİ YAKALA";
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(245, 197, 66, 0.3);
+  border-top: 1px solid rgba(245, 197, 66, 0.1);
+  padding-top: 10px;
+  display: block;
+}
+
+/* Mobilde kartları biraz daraltalım */
+@media (max-width: 480px) {
+  .event-card {
+    width: 100%;
+  }
 }
 
 /* ========== GALERİ / ESKİ ETKİNLİKLER ========== */
@@ -334,13 +418,6 @@ footer {
   border-top: 1px solid #3b3b3b;
 }
 
-body {
-  margin: 0;
-  padding-bottom: 60px; 
-  background-color: #000;
-  color: #fff;
-}
-
 /* ========== RESPONSIVE TASARIM ========== */
 @media (max-width: 768px) {
   nav ul {
@@ -394,178 +471,142 @@ body {
 .delete-btn:hover {
   background-color: #ff4c4c;
 }
-
-.section {
-  padding: 40px 20px;
-}
+/* =========================================================
+   GELİŞMİŞ JAZZ TAKVİM PANELİ
+   ========================================================= */
 
 .events-layout {
   display: grid;
-  grid-template-columns: 1.1fr 1.9fr;
-  gap: 2rem;
+  grid-template-columns: 380px 1fr; /* Takvime sabit şık bir genişlik */
+  gap: 2.5rem;
   align-items: flex-start;
 }
 
-.calendar-panel,
-.events-panel {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
+.calendar-panel {
+  background: linear-gradient(145deg, rgba(25, 25, 28, 0.9), rgba(10, 10, 12, 0.95));
+  border-radius: 24px; /* Daha yumuşak köşeler */
+  padding: 25px;
+  border: 1px solid rgba(245, 197, 66, 0.15); /* Çok hafif altın çerçeve */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+              inset 0 0 20px rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
 }
 
-.calendar-panel h2,
-.events-panel h2 {
-  margin-top: 0;
-  margin-bottom: 12px;
+.calendar-panel h2 {
+  font-family: 'Playfair Display', serif; /* Eğer font yüklüyse harika durur */
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f5c542;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 #calendar-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
 }
 
 #calendar-header button {
-  border: none;
-  padding: 6px 10px;
-  border-radius: 999px;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(245, 197, 66, 0.2);
+  border-radius: 50%;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: transparent;
+  color: #f5c542;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 #calendar-header button:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: #f5c542;
+  color: #000;
+  box-shadow: 0 0 15px rgba(245, 197, 66, 0.4);
 }
 
 #month-label {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 #calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  font-size: 0.85rem;
+  gap: 8px; /* Boşlukları biraz açtık */
 }
 
 .calendar-day-name {
   text-align: center;
-  font-weight: 600;
-  opacity: 0.8;
+  font-weight: 700;
+  color: #f5c542;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: 0.9;
 }
 
-.calendar-day,
-.calendar-empty {
-  min-height: 42px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.calendar-day, .calendar-empty {
+  aspect-ratio: 1 / 1; /* Kare form */
+  min-height: auto; 
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-}
-
-.calendar-day {
-  transition: background 0.15s, transform 0.1s;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .calendar-day:hover {
   background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-1px);
+  border-color: rgba(245, 197, 66, 0.5);
+  transform: translateY(-4px) scale(1.05);
+  z-index: 2;
 }
 
+/* ETKİNLİĞİ OLAN GÜN - EN ÇARPICI KISIM */
 .calendar-day.has-event {
-  background: rgba(255, 215, 0, 0.2);
-  border-color: gold;
+  background: linear-gradient(135deg, rgba(245, 197, 66, 0.1) 0%, rgba(245, 197, 66, 0.25) 100%);
+  border: 1.5px solid #f5c542;
+  color: #f5c542;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(245, 197, 66, 0.2);
+  position: relative;
 }
 
-.event-card {
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px 14px;
-  margin-bottom: 10px;
-  background: rgba(0, 0, 0, 0.35);
+/* Günün altına küçük bir nokta işareti */
+.calendar-day.has-event::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  background: #f5c542;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #f5c542;
 }
-
-.event-card h3 {
-  margin: 0 0 4px 0;
-}
-
-.event-card p {
-  margin: 2px 0;
-  font-size: 0.9rem;
-}
-
-.event-actions {
-  margin-top: 8px;
-  display: flex;
-  gap: 8px;
-}
-
-.event-actions button {
-  border: none;
-  padding: 5px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.event-actions .edit-btn {
-  background: rgba(0, 200, 150, 0.8);
-  color: #fff;
-}
-
-.event-actions .delete-btn {
-  background: rgba(200, 40, 60, 0.9);
-  color: #fff;
-}
-
-/* Form */
-#eventForm {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-#eventForm input,
-#eventForm textarea {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-}
-
-#eventForm button[type="submit"] {
-  margin-top: 8px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: none;
-  background: rgba(120, 200, 255, 0.9);
-  color: #000;
-  cursor: pointer;
-}
-
-#eventForm #resetForm {
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: none;
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-  cursor: pointer;
-}
-
 
 @media (max-width: 800px) {
   .events-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 10fr;
+  }
+  .calendar-panel {
+    max-width: 400px;
+    margin: 0 auto;
   }
 }
 /* Ana sayfa: Duyuru + Yaklaşan Etkinlik */
@@ -660,102 +701,341 @@ body {
 .ev-title { font-weight: 700; margin-bottom: 6px; }
 .ev-meta { font-size: 13px; color: rgba(255,255,255,0.75); }
 
-/* ===========================
-   ADMIN LIST CARD STYLES
-   =========================== */
+/* =========================
+   ETKİNLİKLER SAYFASI LAYOUT
+   ========================= */
 
-/* Genel liste kartı */
-.event-card{
-  position: relative;
-  border-radius: 14px;
-  padding: 14px;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.08),
-    rgba(255,255,255,.03)
-  );
-  border: 1px solid rgba(255,255,255,.12);
-  transition: transform .15s ease, box-shadow .15s ease;
+.events-layout{
+  display: grid;
+  grid-template-columns: 460px 1fr; /* ✅ sol (takvim) daha büyük */
+  gap: 82px;
+  align-items: start;
 }
 
-.event-card:hover{
+@media (max-width: 1100px){
+  .events-layout{
+    grid-template-columns: 1fr; /* mobilde alt alta */
+  }
+}
+
+/* Takvim paneli biraz daha “büyük” görünsün */
+.calendar-panel{
+  transform: scale(1.06);
+  transform-origin: top left;
+}
+
+/* =========================
+   ETKİNLİK KARTLARI: 3'LÜ GRID
+   ========================= */
+
+#events-container.events-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr)); /* ✅ max 3 */
+  gap: 18px;
+}
+
+/* Ekran küçülünce 2 → 1 */
+@media (max-width: 1200px){
+  #events-container.events-grid{
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+  }
+}
+@media (max-width: 780px){
+  #events-container.events-grid{
+    grid-template-columns: 1fr;
+  }
+}
+/* Takvim gün numaraları görünürlük fix */
+.calendar-day {
+  color: rgba(255, 255, 255, 0.75); /* 🔴 ASIL FIX */
+  font-weight: 600;
+}
+
+/* Üzerine gelince daha da belirgin olsun */
+.calendar-day:hover {
+  color: #fff;
+}
+
+/* Etkinlik olan günler */
+.calendar-day.has-event {
+  color: #f5c542;
+  font-weight: 700;
+}
+
+/* Seçili gün (tıklanan) */
+.calendar-day.active {
+  color: #000;
+  background: #f5c542;
+  box-shadow: 0 0 0 2px rgba(245,197,66,0.35);
+}
+/* Ana sayfa panel listesi */
+.panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Etkinlik kartı */
+.ev-item {
+  display: flex;
+  align-items: center;      /* içerik dikey ortalı */
+  justify-content: space-between;
+  gap: 14px;
+
+  padding: 14px 16px;
+  border: 1px solid #f5c54240;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: transform .12s ease, border-color .12s ease;
+}
+
+.ev-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0,0,0,.35);
+  border-color: #f5c54280;
 }
 
-/* Başlık */
-.event-card h3{
-  margin: 0 0 6px;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: .2px;
+/* Soldaki tarih */
+.ev-date {
+  min-width: 92px;
+  font-weight: 700;
+  opacity: .95;
 }
 
-/* Açıklama / içerik */
-.event-card p{
-  margin: 6px 0;
+/* Orta gövde */
+.ev-body {
+  flex: 1;
+  min-width: 0; /* uzun yazılarda taşmayı engeller */
+}
+
+.ev-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.ev-loc, .ev-addr {
   font-size: 13px;
   opacity: .85;
-  line-height: 1.45;
+  line-height: 1.3;
+  word-break: break-word;
 }
 
-/* Tarih / küçük meta bilgiler */
-.event-card small{
-  font-size: 11px;
-  opacity: .65;
+/* Sağdaki ok */
+.ev-cta {
+  white-space: nowrap;
+  font-weight: 600;
+  opacity: .85;
 }
 
-/* Buton alanı */
-.event-actions{
+/* Mobilde alt alta diz */
+@media (max-width: 600px) {
+  .ev-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .ev-date {
+    min-width: auto;
+  }
+  .ev-cta {
+    align-self: flex-end;
+  }
+}
+/* ====== HOME PANEL TEXT FIX ====== */
+
+/* Duyuru başlığı */
+.ann-title {
+  color: #f5c542 !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  margin-bottom: 4px;
+}
+
+/* Duyuru meta */
+.ann-meta {
+  color: rgba(255,255,255,0.75) !important;
+  opacity: 1 !important;
+}
+
+/* Etkinlik başlığı */
+.ev-title {
+  color: #f5c542 !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  margin-bottom: 4px;
+}
+
+/* Etkinlik meta (lokasyon/adres) */
+.ev-meta, .ev-loc, .ev-addr {
+  color: rgba(255,255,255,0.75) !important;
+  opacity: 1 !important;
+}
+/* ============================
+   HOME PANELS - ETKİNLİK SAYFASI VİBE
+   (Glass + neon + gold)
+============================ */
+
+/* Genel panel yerleşimi */
+.home-panels {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+/* Panel kart (Duyurular / Yaklaşan Etkinlikler) */
+.home-panels .panel-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  padding: 18px;
+
+  /* görüntüdeki gibi mor/altın ışık */
+  background:
+    radial-gradient(900px 280px at 85% 0%, rgba(137, 74, 255, 0.18), transparent 60%),
+    radial-gradient(700px 260px at 10% 0%, rgba(245, 197, 66, 0.14), transparent 55%),
+    rgba(10, 10, 10, 0.72);
+
+  border: 1px solid rgba(245, 197, 66, 0.28);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(8px);
+}
+
+/* İnce iç parıltı çerçevesi */
+.home-panels .panel-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+/* Başlık alanı */
+.home-panels .panel-head {
   display: flex;
-  gap: 8px;
-  margin-top: 12px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(245,197,66,0.18);
 }
 
-/* Liste içi butonlar */
-.event-actions button{
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-size: 12px;
+.home-panels .panel-head h2 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #f5c542;
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 14px rgba(245,197,66,0.12);
+}
+
+.panel-link {
+  color: rgba(245,197,66,0.95);
   font-weight: 700;
+  text-decoration: none;
+  transition: 0.15s ease;
+  text-shadow: 0 0 10px rgba(245,197,66,0.10);
+}
+.panel-link:hover { color: #ffd86a; }
+
+/* Liste */
+.home-panels .panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Item kartları (duyuru & etkinlik) */
+.ann-item, .ev-item {
+  border-radius: 16px;
+  padding: 16px;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.25));
+  border: 1px solid rgba(245,197,66,0.20);
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,.15);
-  background: rgba(255,255,255,.08);
-  color: inherit;
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
 }
 
-.event-actions button:hover{
-  filter: brightness(1.1);
+.ann-item:hover, .ev-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245,197,66,0.50);
+  background:
+    linear-gradient(180deg, rgba(245,197,66,0.08), rgba(0,0,0,0.18));
+  box-shadow:
+    0 14px 30px rgba(0,0,0,0.62),
+    0 0 18px rgba(245,197,66,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-/* Sil butonu */
-.event-actions button:last-child{
-  background: rgba(255,80,80,.18);
-  border-color: rgba(255,80,80,.35);
+/* Duyuru */
+.ann-title {
+  color: #f5c542;
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 6px;
 }
-
-/* Duyuru kartları için hafif vurgu */
-#announcementsList .event-card{
-  border-left: 4px solid rgba(120,80,255,.9);
-}
-
-/* Etkinlik kartları için farklı vurgu */
-#eventsList .event-card{
-  border-left: 4px solid rgba(0,200,255,.9);
-}
-
-/* Kayıt listesi satırları */
-#regsList .event-card{
-  border-left: 4px solid rgba(0,255,160,.9);
+.ann-meta {
+  color: rgba(255,255,255,0.78);
   font-size: 13px;
 }
-
-/* Boş liste mesajı */
-.list-empty{
-  opacity: .7;
-  font-size: 13px;
-  padding: 10px;
-  text-align: center;
+.ann-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #c8a8ff;          /* hafif mor */
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
+.ann-link:hover { color: #e1ccff; }
+
+/* Etkinlik */
+.ev-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.ev-title {
+  color: #f5c542;
+  font-weight: 900;
+  font-size: 17px;
+  letter-spacing: 0.2px;
+}
+.ev-date {
+  color: rgba(255,255,255,0.70);
+  font-size: 13px;
+  font-weight: 600;
+}
+.ev-meta {
+  color: rgba(255,255,255,0.78);
+  font-size: 13px;
+  margin-top: 10px;
+  line-height: 1.35;
+}
+.ev-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #6aa8ff;          /* mavi link (görseldeki gibi) */
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ev-link:hover { color: #a9c9ff; }
+
+.ev-tag {
+  margin-top: 10px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 800;
+  color: rgba(245,197,66,0.55);
+}
+
+/* Mobil */
+@media (max-width: 900px) {
+  .home-panels { grid-template-columns: 1fr; }
+}
+.home-panels { background: transparent !important; }
