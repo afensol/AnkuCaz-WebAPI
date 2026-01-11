@@ -135,3 +135,16 @@ C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\obj\Debu
 C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\obj\Debug\net8.0\AnkuCaz.API.pdb
 C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\obj\Debug\net8.0\AnkuCaz.API.genruntimeconfig.cache
 C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\obj\Debug\net8.0\ref\AnkuCaz.API.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Msi\Desktop\7. yarıyıl\enver\university-club-web\AnkuCaz.API\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

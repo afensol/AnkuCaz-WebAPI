@@ -2,6 +2,7 @@ using AnkuCaz.API.Data;
 using AnkuCaz.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AnkuCaz.API.Controllers
 {
@@ -17,6 +18,7 @@ namespace AnkuCaz.API.Controllers
         }
 
         // GET: /api/announcements
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -28,6 +30,7 @@ namespace AnkuCaz.API.Controllers
         }
 
         // GET: /api/announcements/{id}
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -38,7 +41,7 @@ namespace AnkuCaz.API.Controllers
         }
 
         // POST: /api/announcements
-        
+        [Authorize(Roles = "SuperAdmin,Admin,Editor")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Announcement dto)
         {
@@ -61,7 +64,7 @@ namespace AnkuCaz.API.Controllers
         }
 
         // PUT: /api/announcements/{id}
-       
+        [Authorize(Roles = "SuperAdmin,Admin,Editor")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] Announcement dto)
         {
@@ -76,7 +79,7 @@ namespace AnkuCaz.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(entity);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         // DELETE: /api/announcements/{id}
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)

@@ -3,6 +3,7 @@ using AnkuCaz.API.Dtos;
 using AnkuCaz.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AnkuCaz.API.Controllers
 {
@@ -12,7 +13,7 @@ namespace AnkuCaz.API.Controllers
     {
         private readonly AnkuCazContext _context;
         public EventsController(AnkuCazContext context) => _context = context;
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,7 +33,7 @@ namespace AnkuCaz.API.Controllers
 
             return Ok(list);
         }
-
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -53,7 +54,7 @@ namespace AnkuCaz.API.Controllers
             if (ev == null) return NotFound();
             return Ok(ev);
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin,Editor")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateEventDto dto)
         {
@@ -81,7 +82,7 @@ namespace AnkuCaz.API.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = ev.Id }, new { ev.Id });
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin,Editor")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateEventDto dto)
         {
@@ -101,7 +102,7 @@ namespace AnkuCaz.API.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
-
+        [Authorize(Roles = "SuperAdmin,Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

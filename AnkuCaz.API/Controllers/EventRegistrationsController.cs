@@ -1,5 +1,7 @@
+using System.Text;
 using AnkuCaz.API.Data;
 using AnkuCaz.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +16,10 @@ namespace AnkuCaz.API.Controllers
 
         public record CreateEventRegistrationDto(int EventId, string FullName, string Email);
 
-        // Admin için: event'e göre listele -> /api/EventRegistrations?eventId=3
+        // ✅ Admin için: event'e göre listele -> /api/EventRegistrations?eventId=3
+        // ✅ Sadece Admin/SuperAdmin/Viewer görsün (istersen Viewer'ı kaldırırız)
         [HttpGet]
+        [Authorize(Roles = "SuperAdmin,Admin,Viewer")]
         public async Task<IActionResult> Get([FromQuery] int? eventId)
         {
             var q = _context.EventRegistrations.AsNoTracking();
@@ -38,8 +42,47 @@ namespace AnkuCaz.API.Controllers
             return Ok(list);
         }
 
-        // Kullanıcı: kayıt oluştur
+        // ✅ Admin için CSV export -> /api/EventRegistrations/export?eventId=3
+        [HttpGet("export")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
+        public async Task<IActionResult> ExportCsv([FromQuery] int eventId)
+        {
+            if (eventId <= 0) return BadRequest("eventId geçersiz.");
+
+            var ev = await _context.Events.AsNoTracking()
+                .Where(e => e.Id == eventId)
+                .Select(e => new { e.Id, e.Title })
+                .FirstOrDefaultAsync();
+
+            if (ev == null) return NotFound("Event bulunamadı.");
+
+            var rows = await _context.EventRegistrations.AsNoTracking()
+                .Where(r => r.EventId == eventId)
+                .OrderBy(r => r.RegisteredAt)
+                .Select(r => new { r.FullName, r.Email, r.RegisteredAt })
+                .ToListAsync();
+
+            static string Esc(string s)
+            {
+                s ??= "";
+                if (s.Contains('"') || s.Contains(',') || s.Contains('\n') || s.Contains('\r'))
+                    return "\"" + s.Replace("\"", "\"\"") + "\"";
+                return s;
+            }
+
+            var sb = new StringBuilder();
+            sb.AppendLine("FullName,Email,RegisteredAt(UTC)");
+            foreach (var r in rows)
+                sb.AppendLine($"{Esc(r.FullName)},{Esc(r.Email)},{r.RegisteredAt:O}");
+
+            var bytes = Encoding.UTF8.GetBytes(sb.ToString());
+            var fileName = $"ankucaz_event_{ev.Id}_registrations.csv";
+            return File(bytes, "text/csv; charset=utf-8", fileName);
+        }
+
+        // ✅ Kullanıcı: kayıt oluştur (herkese açık kalsın)
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] CreateEventRegistrationDto dto)
         {
             if (dto.EventId <= 0) return BadRequest("EventId geçersiz.");
@@ -65,15 +108,15 @@ namespace AnkuCaz.API.Controllers
             }
             catch (DbUpdateException)
             {
-                // Unique index: aynı email aynı event'e tekrar kayıt olamasın
                 return Conflict("Bu email bu etkinliğe zaten kayıtlı.");
             }
 
             return Ok(new { message = "Kayıt alındı", reg.Id });
         }
 
-        // Admin: kayıt sil
+        // ✅ Admin: kayıt sil
         [HttpDelete("{id:int}")]
+        [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var reg = await _context.EventRegistrations.FindAsync(id);

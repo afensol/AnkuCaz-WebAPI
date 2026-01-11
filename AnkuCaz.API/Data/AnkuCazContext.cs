@@ -1,22 +1,24 @@
 using AnkuCaz.API.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AnkuCaz.API.Data
 {
-    public class AnkuCazContext : DbContext
+    // ✅ Identity tabloları için IdentityDbContext
+    public class AnkuCazContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public AnkuCazContext(DbContextOptions<AnkuCazContext> options) : base(options) { }
 
         public DbSet<Event> Events => Set<Event>();
         public DbSet<EventRegistration> EventRegistrations => Set<EventRegistration>();
 
-        // Projede kalsın istiyorsan:
         public DbSet<Announcement> Announcements => Set<Announcement>();
         public DbSet<ContactMessage> ContactMessages => Set<ContactMessage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder); // ✅ bunu kaldırma (Identity tabloları için şart)
 
             modelBuilder.Entity<EventRegistration>()
                 .HasOne(r => r.Event)
@@ -24,7 +26,6 @@ namespace AnkuCaz.API.Data
                 .HasForeignKey(r => r.EventId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Aynı event’e aynı email bir daha kayıt olamasın
             modelBuilder.Entity<EventRegistration>()
                 .HasIndex(r => new { r.EventId, r.Email })
                 .IsUnique();
