@@ -17,25 +17,23 @@ async function loadEvents() {
 
     events = await response.json();
 
-    renderEventsList();   // tüm etkinlikler
-    renderCalendar();     // takvimde işaretle
+    renderEventsList();   
+    renderCalendar();    
   } catch (err) {
     console.error(err);
     if (container) container.innerHTML = "<p>Etkinlikler yüklenirken hata oluştu.</p>";
   }
 }
 
-// ISO (2025-12-31T10:45:00) -> YYYY-MM-DD
 function fmtDate(iso) {
   if (!iso) return "";
-  // API zaten "2025-12-31T10:45:00" gibi dönüyor; dilimi korumak için slice en güvenlisi:
   return String(iso).slice(0, 10);
 }
 
 function renderEventsList(filterDate = null) {
   const container = document.getElementById("events-container");
   if (!container) return;
-  
+
   container.innerHTML = "";
 
   let filtered = events;
@@ -49,25 +47,23 @@ function renderEventsList(filterDate = null) {
   }
 
   filtered.forEach(ev => {
-  const start = fmtDate(ev.startDate);
-  const end = fmtDate(ev.endDate);
+    const start = fmtDate(ev.startDate);
+    const end = fmtDate(ev.endDate);
 
-  // ✅ MEKAN: yeni alanlar
-  const mekan = [ev.locationName, ev.locationAddress].filter(Boolean).join(" — ");
+    const mekan = [ev.locationName, ev.locationAddress].filter(Boolean).join(" — ");
 
-  const card = document.createElement("div");
-  card.className = "event-card";
+    const card = document.createElement("div");
+    card.className = "event-card";
 
-  card.innerHTML = `
-    <h3>${ev.title ?? ""}</h3>
-    <p><strong>Tarih:</strong> ${start}${end && end !== start ? ` → ${end}` : ""}</p>
-    <p><strong>Mekan:</strong> ${mekan || "—"}</p>
-    <a class="detail-link" href="etkinlik_kayıt.html?id=${ev.id}">Detay / Kayıt</a>
-  `;
+    card.innerHTML = `
+      <h3>${ev.title ?? ""}</h3>
+      <p><strong>Tarih:</strong> ${start}${end && end !== start ? ` → ${end}` : ""}</p>
+      <p><strong>Mekan:</strong> ${mekan || "—"}</p>
+      <a class="detail-link" href="etkinlik_kayıt.html?id=${ev.id}">Detay / Kayıt</a>
+    `;
 
-  container.appendChild(card);
-});
-
+    container.appendChild(card);
+  });
 }
 
 function setupCalendarNav() {
@@ -106,7 +102,6 @@ function renderCalendar() {
 
   monthLabel.textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
-  // Gün isimleri
   const daysOfWeek = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
   daysOfWeek.forEach(d => {
     const cell = document.createElement("div");
@@ -116,17 +111,15 @@ function renderCalendar() {
   });
 
   const firstDay = new Date(currentYear, currentMonth, 1);
-  const startingDay = (firstDay.getDay() + 6) % 7; // Pazartesi=0
+  const startingDay = (firstDay.getDay() + 6) % 7; 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-  // Boşluklar
   for (let i = 0; i < startingDay; i++) {
     const emptyCell = document.createElement("div");
     emptyCell.className = "calendar-empty";
     grid.appendChild(emptyCell);
   }
 
-  // Gün hücreleri
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = toDateString(currentYear, currentMonth + 1, day);
 
@@ -134,7 +127,6 @@ function renderCalendar() {
     cell.className = "calendar-day";
     cell.textContent = day;
 
-    // Etkinlik var mı?
     const hasEvent = events.some(ev => fmtDate(ev.startDate) === dateStr);
     if (hasEvent) cell.classList.add("has-event");
 

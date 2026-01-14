@@ -16,8 +16,7 @@ namespace AnkuCaz.API.Controllers
 
         public record CreateEventRegistrationDto(int EventId, string FullName, string Email);
 
-        // ✅ Admin için: event'e göre listele -> /api/EventRegistrations?eventId=3
-        // ✅ Sadece Admin/SuperAdmin/Viewer görsün (istersen Viewer'ı kaldırırız)
+       
         [HttpGet]
         [Authorize(Roles = "SuperAdmin,Admin,Viewer")]
         public async Task<IActionResult> Get([FromQuery] int? eventId)
@@ -42,7 +41,7 @@ namespace AnkuCaz.API.Controllers
             return Ok(list);
         }
 
-        // ✅ Admin için CSV export -> /api/EventRegistrations/export?eventId=3
+       
         [HttpGet("export")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> ExportCsv([FromQuery] int eventId)
@@ -80,7 +79,7 @@ namespace AnkuCaz.API.Controllers
             return File(bytes, "text/csv; charset=utf-8", fileName);
         }
 
-        // ✅ Kullanıcı: kayıt oluştur (herkese açık kalsın)
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] CreateEventRegistrationDto dto)
@@ -114,7 +113,7 @@ namespace AnkuCaz.API.Controllers
             return Ok(new { message = "Kayıt alındı", reg.Id });
         }
 
-        // ✅ Admin: kayıt sil
+
         [HttpDelete("{id:int}")]
         [Authorize(Roles = "SuperAdmin,Admin")]
         public async Task<IActionResult> Delete(int id)

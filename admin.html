@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ANKÜCaz — Admin Panel</title>
+
+  <style>
+    :root{
+
+      --bgA: #0b0f14;
+      --bgB: #101826;
+
+      --card: rgba(18, 24, 34, 0.68);
+      --card2: rgba(18, 24, 34, 0.82);
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+
+      --gold: #f5c542;
+      --gold2:#ffde78;
+
+      --neonCyan: rgba(0, 255, 255, .18);
+      --neonPurple: rgba(168, 85, 247, .18);
+
+      --ok: #22c55e;
+      --err:#ef4444;
+
+      --radius: 18px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: linear-gradient(135deg, var(--bgA), var(--bgB));
+      color: var(--text);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background: radial-gradient(800px 420px at 18% 12%, rgba(245,197,66,.10), transparent 60%),
+                  radial-gradient(900px 520px at 88% 8%, var(--neonPurple), transparent 62%),
+                  radial-gradient(900px 520px at 65% 90%, var(--neonCyan), transparent 62%);
+      filter: blur(26px);
+      opacity: .55;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .wrap{
+      max-width: 1120px;
+      margin: 28px auto;
+      padding: 0 16px;
+    }
+
+    .brand{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom: 16px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 26px;
+      letter-spacing: .2px;
+      color: var(--text);
+      text-shadow: 0 10px 30px rgba(0,0,0,.7);
+    }
+    .brand p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .badge{
+      font-size: 12.5px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,197,66,.30);
+      background: rgba(245,197,66,.12);
+      color: rgba(255, 230, 160, .95);
+      box-shadow: 0 12px 30px rgba(245,197,66,.10);
+      white-space: nowrap;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: var(--text);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      box-shadow: 0 0 18px rgba(245,197,66,.45);
+    }
+
+    .muted{ color: var(--muted); }
+
+    hr{
+      border:0;
+      border-top: 1px solid rgba(255,255,255,.10);
+      margin: 14px 0;
+    }
+
+    code{
+      background: rgba(255,255,255,.08);
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: rgba(255,255,255,.90);
+    }
+
+    .row{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .row > * { flex: 1; }
+    .fixed{ flex: 0 0 auto; }
+
+    input, select, textarea{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10, 14, 20, .55);
+      color: var(--text);
+      outline:none;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      transition: transform .08s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+    textarea{ min-height: 90px; resize: vertical; }
+    input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.45); }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(245,197,66,.55);
+      box-shadow: 0 0 0 4px rgba(245,197,66,.12), 0 12px 30px rgba(0,0,0,.35);
+      transform: translateY(-1px);
+    }
+
+    button{
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(10, 14, 20, .35);
+      color: var(--text);
+      padding: 11px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease, filter .15s ease;
+      font-weight: 750;
+      letter-spacing:.2px;
+    }
+    button:hover{
+      transform: translateY(-1px);
+      border-color: rgba(245,197,66,.40);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      filter: brightness(1.05);
+    }
+    button:active{ transform: translateY(0px); }
+
+    button.primary{
+      border: none;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: #101018;
+      box-shadow: 0 16px 45px rgba(245,197,66,.28), 0 0 24px rgba(245,197,66,.12);
+    }
+    button.primary:hover{
+      box-shadow: 0 18px 55px rgba(245,197,66,.34), 0 0 28px rgba(245,197,66,.18);
+    }
+
+    button.ghost{
+      background: transparent;
+      box-shadow: none;
+      border-color: rgba(255,255,255,.12);
+    }
+
+    .nav{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .nav button{
+      width:100%;
+      text-align:left;
+      box-shadow:none;
+      background: rgba(10, 14, 20, .28);
+    }
+    .nav button:hover{
+      box-shadow: 0 12px 28px rgba(0,0,0,.40);
+    }
+
+    .roleBadges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 10px;
+    }
+    .rolePill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,197,66,.28);
+      background: rgba(245,197,66,.10);
+      color: rgba(255, 230, 160, .95);
+      font-weight: 800;
+    }
+
+    .section{ display:none; }
+    .section.active{ display:block; }
+
+    .ap-msg{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10, 14, 20, .35);
+      color: var(--text);
+    }
+    .ap-msg.ok{
+      background: rgba(34,197,94,.12);
+      border-color: rgba(34,197,94,.25);
+      color: rgba(210,255,225,.95);
+    }
+    .ap-msg.err{
+      background: rgba(239,68,68,.12);
+      border-color: rgba(239,68,68,.25);
+      color: rgba(255,215,215,.95);
+    }
+
+    .hide{ display:none !important; }
+
+
+    .tbl{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 14px;
+    }
+    .tbl thead th{
+      text-align:left;
+      font-size: 13px;
+      color: rgba(255,255,255,.80);
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(10, 14, 20, .35);
+    }
+    .tbl tbody td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: rgba(255,255,255,.90);
+      vertical-align: top;
+    }
+    .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap: wrap;
+    }
+    .mini{
+      padding: 8px 10px;
+      border-radius: 12px;
+      box-shadow:none;
+      font-weight: 800;
+    }
+
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+      .badge{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div>
+        <h1>ANKÜCaz — Admin Panel</h1>
+        <p>Giriş yaptıktan sonra rollerine göre menü açılacak. (API: <code id="apiBaseText"></code>)</p>
+      </div>
+      <div class="badge">🎷 Jazzy • Sisli • Canlı</div>
+    </div>
+
+
+    <div id="loginCard" class="card">
+      <div class="title"><span class="dot"></span>Giriş</div>
+      <p class="muted" style="margin-top:0">
+        Email ve şifreyle giriş yap. Başarılı olursa cookie üzerinden oturum açılır.
+      </p>
+
+      <div class="row">
+        <input id="loginEmail" type="email" placeholder="email" autocomplete="username" />
+        <input id="loginPass" type="password" placeholder="şifre" autocomplete="current-password" />
+        <button id="btnLogin" class="primary fixed">Giriş Yap</button>
+      </div>
+
+      <div id="loginMsg"></div> 
+
+      <p class="muted" style="margin:10px 0 0">
+        
+      </p>
+    </div>
+
+    <div id="appWrap" class="grid hide">
+
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <div class="title" style="margin:0"><span class="dot"></span>Menü</div>
+            <div class="muted" id="whoamiText" style="margin-top:8px"></div> 
+
+            <div class="roleBadges" id="roleBadges"></div>
+
+          </div>
+          <button id="btnLogout" class="ghost fixed">Çıkış</button>
+        </div>
+
+        <hr />
+
+        <div class="nav">
+          <button data-section="secHome">🏠 Dashboard</button>
+          <button data-section="secRegs" id="navRegs">🎟️ Katılımcılar</button>
+          <button data-section="secUsers" id="navUsers">👥 Üyeler & Roller</button>
+          <button data-section="secHelp">ℹ️ Yardım</button>
+        </div>
+
+        <div class="muted" id="navNote" style="margin-top:12px"></div>
+        
+      </div>
+
+
+      <div class="card">
+
+        <div id="secHome" class="section active">
+          <div class="title"><span class="dot"></span>Dashboard</div>
+          
+
+          <div class="row">
+            <button id="btnMe" class="primary fixed">/api/auth/me</button>
+          </div>
+
+          <div id="homeMsg"></div>
+
+          <hr style="margin:20px 0; opacity:.6" />
+
+
+          <div class="card" style="background: var(--card2); margin-top: 12px;">
+            <div class="title" style="font-size:16px"><span class="dot"></span>Etkinlik Yönetimi</div>
+
+            <div class="row">
+              <button id="btnEventsLoad" class="primary fixed">Etkinlikleri Yükle</button>
+              <button id="btnEventNew" class="fixed">+ Yeni Etkinlik</button>
+            </div>
+
+            <div id="eventMsg"></div>
+
+            <table class="tbl"> 
+              <thead>
+                <tr>
+                  <th>Başlık</th>
+                  <th>Tarih</th>
+                  <th>Yer</th>
+                  <th>Açıklama</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody id="eventsTbody"></tbody> 
+            </table>
+
+            <div id="eventFormCard" class="card" style="display:none; margin-top:12px; background: rgba(10,14,20,.35);">
+
+              <div class="title" style="font-size:16px"><span class="dot"></span>Etkinlik Formu</div>
+
+              <form id="eventForm">
+                <input type="hidden" id="eventId" />
+
+                <div class="row">
+                  <input id="eventTitle" placeholder="Başlık" />
+                  <input id="eventImageUrl" placeholder="Görsel URL (opsiyonel)" />
+                </div>
+
+                <textarea id="eventDescription" placeholder="Açıklama"></textarea>
+
+                <div class="row">
+                  <input id="eventStart" type="datetime-local" />
+                  <input id="eventEnd" type="datetime-local" />
+                </div>
+
+                <div class="row">
+                  <input id="eventLocName" placeholder="Mekan adı" />
+                  <input id="eventLocAddr" placeholder="Mekan adresi" />
+                </div>
+
+                <div class="row">
+                  <button type="submit" class="primary fixed">Kaydet</button>
+                  <button type="button" id="btnEventCancel" class="ghost fixed">Vazgeç</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+          <div class="card" style="background: var(--card2); margin-top: 12px;">
+            <div class="title" style="font-size:16px"><span class="dot"></span>Duyuru Yönetimi</div>
+
+            <div class="row">
+              <button id="btnAnnsLoad" class="primary fixed">Duyuruları Yükle</button> 
+
+              <button id="btnAnnNew" class="fixed">+ Yeni Duyuru</button>
+
+            </div>
+
+            <div id="annMsg"></div>
+
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th>Başlık</th>
+                  <th>Tarih</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody id="annsTbody"></tbody> 
+
+            </table>
+
+            <div id="annFormCard" class="card" style="display:none; margin-top:12px; background: rgba(10,14,20,.35);">
+              <div class="title" style="font-size:16px"><span class="dot"></span>Duyuru Formu</div>
+
+              <form id="annForm">
+                <input type="hidden" id="annId" />
+
+                <div class="row">
+                  <input id="annTitle" placeholder="Başlık" />
+                  <input id="annImageUrl" placeholder="Görsel URL (opsiyonel)" />
+                </div>
+
+                <textarea id="annBody" placeholder="İçerik"></textarea>
+
+                <div class="row">
+                  <input id="annDate" type="datetime-local" />
+                </div>
+
+                <div class="row">
+                  <button type="submit" class="primary fixed">Kaydet</button>
+                  <button type="button" id="btnAnnCancel" class="ghost fixed">Vazgeç</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div id="secRegs" class="section">
+          <div class="title"><span class="dot"></span>Katılımcılar</div>
+          <p class="muted" style="margin-top:0">Etkinlik seçip katılımcıları listeleyebilirsin.</p>
+
+          <div class="row">
+            <select id="regsEventSelect">
+              <option value="">Etkinlik seç...</option>
+            </select>  
+            <button id="btnLoadRegs" class="primary fixed">Listele</button>
+
+            <button id="btnExportCsv" class="fixed">CSV İndir</button>
+          </div>
+
+          <div id="regsMsg"></div>
+
+          <table class="tbl" style="margin-top: 12px;">
+            <thead>
+              <tr>
+                <th>Ad Soyad</th>
+                <th>Email</th>
+                <th>Kayıt Tarihi</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="regsTbody"></tbody> 
+
+          </table>
+        </div>
+
+
+        <div id="secUsers" class="section">
+          <div class="title"><span class="dot"></span>Üyeler & Roller</div>
+          <p class="muted" style="margin-top:0">Bu sayfa sadece <b>SuperAdmin</b> için açık.</p>
+
+          <div class="card" style="margin-top:12px; background: var(--card2);">
+            <div class="title" style="font-size:16px"><span class="dot"></span>Kullanıcı Oluştur</div>
+            <div class="row">
+              <input id="newUserEmail" type="email" placeholder="yeni kullanıcı email" />
+              <input id="newUserPass" type="text" placeholder="geçici şifre (örn: Test123!)" />
+              <button id="btnCreateUser" class="primary fixed">Oluştur</button>
+            </div>
+            <div id="createUserMsg"></div>
+          </div>
+
+          <div class="card" style="margin-top:12px; background: var(--card2);">
+            <div class="title" style="font-size:16px"><span class="dot"></span>Rol Ata</div>
+            <div class="row">
+              <input id="roleUserEmail" type="email" placeholder="kullanıcı email" />
+              <select id="roleSelect">
+                <option>Viewer</option>
+                <option>Editor</option>
+                <option>Admin</option>
+                <option>SuperAdmin</option>
+              </select>
+              <button id="btnSetRole" class="primary fixed">Rol Ver</button>
+            </div>
+            <div id="setRoleMsg"></div>
+          </div>
+        </div>
+
+
+        <div id="secHelp" class="section">
+          <div class="title"><span class="dot"></span>Yardım</div>
+          <ul class="muted" style="margin-top:0">
+            <li>Cookie ile çalışır; isteklerde <code>credentials: "include"</code> şart.</li>
+            <li>Üye/rol işlemleri sadece <code>SuperAdmin</code> rolüyle çalışır.</li>
+            <li>Events/Announcements create/update/delete endpointleri rol ile korunur.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+
+
+  <script>
+    const t = document.getElementById("apiBaseText");
+    if (t) t.textContent = "http://localhost:5005";
+  </script>
+
+</body>
+</html>

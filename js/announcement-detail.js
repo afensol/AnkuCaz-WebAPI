@@ -1,5 +1,3 @@
-// announcement-detail.js
-// 🔥 Senin API launchSettings’inde HTTP portu 5005
 const API_BASE = "http://localhost:5005";
 
 document.addEventListener("DOMContentLoaded", loadAnnouncementDetail);

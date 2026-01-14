@@ -372,6 +372,12 @@ nav ul li a:hover {
   border-radius: 10px;
   padding: 20px;
 }
+/* Mesaj Gönder başlığı */
+.contact-form h3 {
+  color: #e1be5e;        /* Sarı (temaya uygun) */
+  text-align: center;
+  margin-bottom: 15px;
+}
 
 .contact-form input,
 .contact-form textarea {
@@ -391,7 +397,7 @@ nav ul li a:hover {
 
 .contact-form button {
   background: #f5c542;
-  color: #000;
+  color: #000000;
   font-weight: bold;
   border: none;
   border-radius: 6px;

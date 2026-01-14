@@ -44,7 +44,7 @@ async function loadHomeAnnouncements() {
     let data = await res.json();
     console.log("✅ ANN data:", data);
 
-    // alan adı toleransı (createdAt / createdDate vs)
+
     data = data.map(a => ({
       id: a.id ?? a.announcementId ?? a.AnnouncementId,
       title: a.title ?? a.Title ?? "Duyuru",
@@ -74,7 +74,7 @@ async function loadHomeAnnouncements() {
 }
 
 function goAnnouncement(id) {
-  // Sende detay sayfan: duyuru-detay.html
+
   window.location.href = `duyuru-detay.html?id=${id}`;
 }
 

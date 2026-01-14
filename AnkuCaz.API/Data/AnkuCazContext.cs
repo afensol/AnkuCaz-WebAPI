@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AnkuCaz.API.Data
 {
-    // ✅ Identity tabloları için IdentityDbContext
+
     public class AnkuCazContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public AnkuCazContext(DbContextOptions<AnkuCazContext> options) : base(options) { }
@@ -18,7 +18,7 @@ namespace AnkuCaz.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // ✅ bunu kaldırma (Identity tabloları için şart)
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<EventRegistration>()
                 .HasOne(r => r.Event)

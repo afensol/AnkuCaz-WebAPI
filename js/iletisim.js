@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_BASE = "http://localhost:5005";
 
-  const form = document.getElementById("contactForm");
-  const result = document.getElementById("contactResult");
+  const form = document.getElementById("contactForm"); 
+  const result = document.getElementById("contactResult"); 
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
